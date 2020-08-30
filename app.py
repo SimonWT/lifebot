@@ -1,8 +1,9 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 import telegram
 from telebot.credentials import bot_token, bot_user_name, URL
 from telebot.mastermind import get_response
 from database.db import initialize_db
+from database.models import Place
 import json
 
 
@@ -45,6 +46,17 @@ def set_webhook():
 @app.route('/')
 def index():
     return '.'
+
+@app.route('/places')
+def get_movies():
+    places = Places.objects().to_json()
+    return Response(places, mimetype="application/json", status=200)
+
+@app.route('/place', methods=['POST'])
+    body = request.get_json()
+    place =  Place(**body).save()
+    id = place.id
+    return {'id': str(id)}, 200
 
 
 if __name__ == '__main__':
