@@ -5,12 +5,15 @@ click==7.1.2
 cryptography==3.1
 decorator==4.4.2
 Flask==1.1.2
+flask-mongoengine==0.9.5
 Flask-PyMongo==2.3.0
+Flask-WTF==0.14.3
 gunicorn==20.0.4
 idna==2.10
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
+mongoengine==0.20.0
 pycparser==2.20
 pymongo==3.11.0
 python-telegram-bot==12.8
@@ -19,3 +22,4 @@ six==1.15.0
 tornado==6.0.4
 urllib3==1.25.10
 Werkzeug==1.0.1
+WTForms==2.3.3
