@@ -5,6 +5,7 @@ from telebot.mastermind import get_response
 from database.db import initialize_db
 from database.models import Place
 import json
+import logging
 
 
 global bot
@@ -47,14 +48,16 @@ def set_webhook():
 def index():
     return '.'
 
-@app.route('/places')
+@app.route('/places', methods=['GET'])
 def get_places():
     places = Place.objects().to_json()
     return Response(places, mimetype="application/json", status=200)
 
 @app.route('/place', methods=['POST'])
-def set_place():
-    body = request.get_json()
+def add_place():
+    print("got place:", request)
+    body = request.get_json(force=True)
+    print("got place:", request)
     place =  Place(**body).save()
     id = place.id
     return {'id': str(id)}, 200
