@@ -2,6 +2,7 @@ from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name, URL
 from telebot.mastermind import get_response
+from flask_pymongo import PyMongo
 
 
 global bot
@@ -10,6 +11,8 @@ TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb://root:root@cluster0.ro0oy.mongodb.net/test"
+mongo = PyMongo(app)
 
 @app.route('/telegram{}'.format(TOKEN), methods=['POST'])
 def respond():
