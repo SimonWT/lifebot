@@ -48,11 +48,12 @@ def index():
     return '.'
 
 @app.route('/places')
-def get_movies():
+def get_places():
     places = Place.objects().to_json()
     return Response(places, mimetype="application/json", status=200)
 
 @app.route('/place', methods=['POST'])
+def set_place():
     body = request.get_json()
     place =  Place(**body).save()
     id = place.id
