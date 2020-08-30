@@ -49,7 +49,7 @@ def index():
 
 @app.route('/places')
 def get_movies():
-    places = Places.objects().to_json()
+    places = Place.objects().to_json()
     return Response(places, mimetype="application/json", status=200)
 
 @app.route('/place', methods=['POST'])
