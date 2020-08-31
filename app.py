@@ -56,9 +56,12 @@ def get_places():
 @app.route('/place', methods=['POST'])
 def add_place():
     print("got place:", request)
-    body = request.get_json(force=True)
+    # body = request.get_json(force=True)
+    name = 'Keks'
+    country = 'kektry'
+    city = 'kekcity'
     print("got place:", request)
-    place =  Place(**body).save()
+    place =  Place(name, country, city).save()
     id = place.id
     return {'id': str(id)}, 200
 
