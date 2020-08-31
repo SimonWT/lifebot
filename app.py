@@ -61,7 +61,7 @@ def add_place():
     country = 'kektry'
     city = 'kekcity'
     print("got place:", request)
-    place =  Place(name, country, city).save()
+    place = Place(name='Keks', country='kektry', city='kekcity',address='kekdress').save()
     id = place.id
     return {'id': str(id)}, 200
 
