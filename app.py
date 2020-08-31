@@ -15,7 +15,7 @@ bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
-    'host': 'mongodb://root:root@cluster0.ro0oy.mongodb.net/test'
+    'host': 'mongodb+srv://root:root@cluster0.ro0oy.mongodb.net/test'
 }
 initialize_db(app)
 
@@ -55,13 +55,8 @@ def get_places():
 
 @app.route('/place', methods=['POST'])
 def add_place():
-    print("got place:", request)
-    # body = request.get_json(force=True)
-    name = 'Keks'
-    country = 'kektry'
-    city = 'kekcity'
-    print("got place:", request)
-    place = Place(name='Keks', country='kektry', city='kekcity',address='kekdress').save()
+    body = request.get_json()
+    place = Place(**body).save()
     id = place.id
     return {'id': str(id)}, 200
 
