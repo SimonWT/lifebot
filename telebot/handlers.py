@@ -1,13 +1,14 @@
 from telegram.ext import Dispatcher,  CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from threading import Thread
 
 LOCATION, BUDGET = range(2)
 
-
-def init_bot(bot, update_queue):
+def init_bot(bot, update_queue, logger_g):
     # Create bot, update queue and dispatcher instances
     dispatcher = Dispatcher(bot, update_queue)
-
+    global logger
+    logger = logger_g
     ##### Register handlers here #####
     
     # start_handler = CommandHandler('start', tghandlers.startCommand)
@@ -26,12 +27,12 @@ def init_bot(bot, update_queue):
         fallbacks=[CommandHandler('cancel', cancel)]
     )
 
-    dp.add_handler(conv_handler)
+    dispatcher.add_handler(conv_handler)
     
     # Start the thread
     thread = Thread(target=dispatcher.start, name='dispatcher')
     thread.start()
-    
+    logger.info("Webhook Setted Up")
     return update_queue
 
 def start(update, context):

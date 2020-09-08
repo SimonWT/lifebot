@@ -11,7 +11,6 @@ import json
 import logging
 
 from queue import Queue  # in python 2 it should be "from Queue"
-from threading import Thread
 from telegram.ext import Dispatcher, CommandHandler
 
 
@@ -49,7 +48,7 @@ def respond():
 @app.route('/setwebhook', methods=['GET', 'POST'])
 def set_webhook():
     s = bot.setWebhook('{URL}/telegram{HOOK}'.format(URL=URL, HOOK=TOKEN))
-    tghandlers.init_bot(bot, update_queue)
+    tghandlers.init_bot(bot, update_queue, logger)
     if s:
         return "webhook setup ok"
     else:
