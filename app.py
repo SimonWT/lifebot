@@ -14,7 +14,7 @@ from telegram.ext import Dispatcher, CommandHandler
 
 global bot
 global TOKEN
-global updateQueue
+global update_queue_global
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 
@@ -28,7 +28,7 @@ initialize_db(app)
 def respond():
     # # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
-    updateQueue.put(update)
+    update_queue_global.put(update)
 
     # chat_id = update.message.chat.id
     # msg_id = update.message.message_id
@@ -46,7 +46,8 @@ def respond():
 @app.route('/setwebhook', methods=['GET', 'POST'])
 def set_webhook():
     s = bot.setWebhook('{URL}/telegram{HOOK}'.format(URL=URL, HOOK=TOKEN))
-    updateQueue = setup_tg_bot()
+    update_queue_global = setup_tg_bot()
+    print(update_queue_global)
     if s:
         return "webhook setup ok"
     else:
@@ -75,7 +76,7 @@ def setup_tg_bot():
 
     ##### Register handlers here #####
     
-    start_handler = CommandHandler('start', start)
+    start_handler = CommandHandler('start', startCommand)
     dispatcher.add_handler(start_handler)
     
     # Start the thread
@@ -87,7 +88,7 @@ def setup_tg_bot():
     # to stop it at server shutdown, or to register more handlers:
     # return (update_queue, dispatcher)
 
-def start(update, context):
+def startCommand(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
 
 if __name__ == '__main__':
