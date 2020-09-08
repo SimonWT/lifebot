@@ -39,10 +39,6 @@ def respond():
     update = telegram.Update.de_json(request.get_json(force=True), bot)
     update_queue.put(update)
 
-    # # Telegram understands UTF-8, so encode text for unicode compatibility
-    text = update.message.text.encode('utf-8').decode()
-    print("got text message :", text)
-
     return 'ok'
 
 @app.route('/setwebhook', methods=['GET', 'POST'])
