@@ -33,7 +33,7 @@ def init_bot(bot, update_queue):
     
     return update_queue
 
-def startCommand(update, context):
+def start(update, context):
     context.message.reply_text('Send me the Location of place where you plan to go')
 
     return LOCATION
