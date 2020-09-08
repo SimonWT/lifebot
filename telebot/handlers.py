@@ -56,7 +56,7 @@ def location(update, context):
 
 def budget(update, context):
     user = context.message.from_user
-    logger.info("Bio of %s: %s", user.first_name, update.message.text)
+    logger.info("Budget of %s: %s", user.first_name, context.message.text)
     context.message.reply_text('Thank you! I hope we can talk again some day.')
 
     return ConversationHandler.END
