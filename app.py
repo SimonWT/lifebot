@@ -76,7 +76,7 @@ def setup_tg_bot():
     ##### Register handlers here #####
     
     start_handler = CommandHandler('start', start)
-    dispatcher.add_handler(start)
+    dispatcher.add_handler(start_handler)
     
     # Start the thread
     thread = Thread(target=dispatcher.start, name='dispatcher')
