@@ -41,8 +41,8 @@ def start(update, context):
     return LOCATION
 
 def location(update, context):
-    user = update.message.from_user
-    user_location = update.message.location
+    user = context.message.from_user
+    user_location = context.message.location
     logger.info("Location of %s: %f / %f", user.first_name, user_location.latitude,
                 user_location.longitude)
     context.message.reply_text('Thanks, Maybe I can visit you sometime! '
@@ -52,7 +52,7 @@ def location(update, context):
 
 
 def budget(update, context):
-    user = update.message.from_user
+    user = context.message.from_user
     logger.info("Bio of %s: %s", user.first_name, update.message.text)
     context.message.reply_text('Thank you! I hope we can talk again some day.')
 
@@ -64,7 +64,7 @@ def start(update, context):
     return LOCATION
 
 def cancel(update, context):
-    user = update.message.from_user
+    user = context.message.from_user
     logger.info("User %s canceled the conversation.", user.first_name)
     context.message.reply_text('Bye! I hope we can talk again some day.',
                               reply_markup=ReplyKeyboardRemove())
