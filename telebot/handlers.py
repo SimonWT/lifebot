@@ -1,4 +1,5 @@
 from telegram.ext import Dispatcher,  CommandHandler, MessageHandler, Filters, ConversationHandler
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
 
 LOCATION, BUDGET = range(2)
 
@@ -53,3 +54,19 @@ def budget(update, context):
     user = update.message.from_user
     logger.info("Bio of %s: %s", user.first_name, update.message.text)
     update.message.reply_text('Thank you! I hope we can talk again some day.')
+
+    return ConversationHandler.END
+
+
+def start(update, context):
+    context.message.reply_text('Send me the Location of place where you plan to go')
+
+    return LOCATION
+
+def cancel(update, context):
+    user = update.message.from_user
+    logger.info("User %s canceled the conversation.", user.first_name)
+    update.message.reply_text('Bye! I hope we can talk again some day.',
+                              reply_markup=ReplyKeyboardRemove())
+
+    return ConversationHandler.END
