@@ -40,7 +40,6 @@ def respond():
     # response = get_response(text)
     # bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
 
-
     return 'ok'
 
 @app.route('/setwebhook', methods=['GET', 'POST'])
@@ -88,7 +87,7 @@ def setup_tg_bot():
     # return (update_queue, dispatcher)
 
 def startCommand(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+    context.message.reply_text('Hi!')
 
 if __name__ == '__main__':
     app.run(threaded=True)
