@@ -8,4 +8,5 @@ class Place(db.Document):
 
 class Review(db.Document):
     chat_id = db.StringField(required=True, unique=False)
-    
+    content = db.StringField(required=True, unique=False)
+    place = db.ReferenceField(Place)
