@@ -1,5 +1,5 @@
 from telegram.ext import Dispatcher,  CommandHandler, MessageHandler, Filters, ConversationHandler
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton)
 from threading import Thread
 
 LOCATION, BUDGET = range(2)
@@ -36,7 +36,10 @@ def init_bot(bot, update_queue, logger_g):
     return update_queue
 
 def start(update, context):
-    context.message.reply_text('Send me the Location of place where you plan to go')
+    location_keyboard = telegram.KeyboardButton(text="send_location", request_location=True)
+    custom_keyboard = [[ location_keyboard]]
+    reply_markup = telegram.ReplyKeyboardMarkup(custom_keyboard)
+    context.message.reply_text('Send me the Location of place where you plan to go', reply_markup=reply_markup)
 
     return LOCATION
 
