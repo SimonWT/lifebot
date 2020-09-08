@@ -14,9 +14,9 @@ from telegram.ext import Dispatcher, CommandHandler
 
 global bot
 global TOKEN
-global update_queue_global
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
+update_queue = Queue()
 
 app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
@@ -28,7 +28,7 @@ initialize_db(app)
 def respond():
     # # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
-    update_queue_global.put(update)
+    update_queue.put(update)
 
     # chat_id = update.message.chat.id
     # msg_id = update.message.message_id
@@ -46,8 +46,8 @@ def respond():
 @app.route('/setwebhook', methods=['GET', 'POST'])
 def set_webhook():
     s = bot.setWebhook('{URL}/telegram{HOOK}'.format(URL=URL, HOOK=TOKEN))
-    update_queue_global = setup_tg_bot()
-    print(update_queue_global)
+    setup_tg_bot()
+    print(update_queue)
     if s:
         return "webhook setup ok"
     else:
@@ -71,7 +71,6 @@ def add_place():
 
 def setup_tg_bot():
     # Create bot, update queue and dispatcher instances
-    update_queue = Queue()
     dispatcher = Dispatcher(bot, update_queue)
 
     ##### Register handlers here #####
