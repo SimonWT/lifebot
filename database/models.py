@@ -14,5 +14,4 @@ class Review(db.Document):
     place = db.ReferenceField(Place)
 
 class User(db.Document):
-    chat_id = db.StringFiled(required=True, unique=True)
-    
+    chat_id = db.StringField(required=True, unique=True)
