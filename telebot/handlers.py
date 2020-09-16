@@ -38,13 +38,18 @@ def start(update, context):
     # custom_keyboard = [[ location_keyboard]]
     # reply_markup = ReplyKeyboardMarkup(custom_keyboard)
 
-    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
-                 InlineKeyboardButton("Option 2", callback_data='2')],
+    custom_keyboard = [['top-left', 'top-right'], 
+                   ['bottom-left', 'bottom-right']]
 
-                [InlineKeyboardButton("Option 3", callback_data='3')]]
+    reply_markup = ReplyKeyboardMarkup(custom_keyboard)
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    context.bot.send_message('Send me the Location of place where you plan to go', reply_markup=reply_markup)
+    # keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
+    #              InlineKeyboardButton("Option 2", callback_data='2')],
+
+    #             [InlineKeyboardButton("Option 3", callback_data='3')]]
+
+    # reply_markup = InlineKeyboardMarkup(keyboard)
+    context.bot.send_message(text='Send me the Location of place where you plan to go', reply_markup=reply_markup)
 
     return LOCATION
 
