@@ -34,26 +34,27 @@ def init_bot(bot, update_queue, logger_g):
     return update_queue
 
 def start(update, context):
-    # location_keyboard = KeyboardButton(text="send_location", request_location=True)
-    # custom_keyboard = [[ location_keyboard]]
-    # reply_markup = ReplyKeyboardMarkup(custom_keyboard)
+    location_keyboard = KeyboardButton(text="Send Location", request_location=True)
+    writen_location_keyboard = KeyboardButton(text="Write 'Country, City'", request_location=True)
+    custom_keyboard = [[ location_keyboard, writen_location_keyboard]]
+    reply_markup = ReplyKeyboardMarkup(custom_keyboard)
 
     # custom_keyboard = [['top-left', 'top-right'], 
     #                ['bottom-left', 'bottom-right']]
 
     # reply_markup = ReplyKeyboardMarkup(custom_keyboard)
 
-    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
-                 InlineKeyboardButton("Option 2", callback_data='2')],
+    # keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
+    #              InlineKeyboardButton("Option 2", callback_data='2')],
 
-                [InlineKeyboardButton("Option 3", callback_data='3')]]
+    #             [InlineKeyboardButton("Option 3", callback_data='3')]]
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    # reply_markup = InlineKeyboardMarkup(keyboard)
     # context.bot.send_message(text='Send me the Location of place where you plan to go', reply_markup=reply_markup)
 
     context.message.reply_text('Please choose:', reply_markup=reply_markup)
 
-    # return 10 #LOCATION
+    return LOCATION
 
 def location(update, context):
     user = context.message.from_user
