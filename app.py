@@ -22,7 +22,7 @@ update_queue = Queue()
 
 app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
-    'host': 'mongodb+srv://root:root@cluster0.ro0oy.mongodb.net/test?retryWrites=true&w=majority'
+    'host': 'mongodb+srv://root:root@cluster0.ro0oy.mongodb.net/test'
 }
 
 initialize_db(app)
@@ -68,3 +68,4 @@ def add_place():
 
 if __name__ == '__main__':
     app.run(threaded=True)
+    set_webhook()
