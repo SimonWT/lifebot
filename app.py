@@ -22,7 +22,7 @@ update_queue = Queue()
 
 app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
-    'host': 'mongodb+srv://root:root@cluster0.ro0oy.mongodb.net/test'
+    'host': 'mongodb+srv://root:root@cluster0.ro0oy.mongodb.net/test?retryWrites=true&w=majority'
 }
 
 initialize_db(app)
