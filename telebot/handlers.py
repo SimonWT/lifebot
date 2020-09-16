@@ -1,5 +1,5 @@
 from telegram.ext import Dispatcher,  CommandHandler, MessageHandler, Filters, ConversationHandler
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton)
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup)
 from threading import Thread
 
 LOCATION, BUDGET = range(2)
@@ -9,10 +9,8 @@ def init_bot(bot, update_queue, logger_g):
     dispatcher = Dispatcher(bot, update_queue)
     global logger
     logger = logger_g
+
     ##### Register handlers here #####
-    
-    # start_handler = CommandHandler('start', tghandlers.startCommand)
-    # dispatcher.add_handler(start_handler)
 
     # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
     conv_handler = ConversationHandler(
@@ -20,8 +18,8 @@ def init_bot(bot, update_queue, logger_g):
 
         states={
             LOCATION: [MessageHandler(Filters.location, location)],
-
-            BUDGET: [MessageHandler(Filters.text & ~Filters.command, budget)]
+            BUDGET: [MessageHandler(Filters.text, budget)],
+            # PLACES: [MessageHandler(Filters.text, budget)]
         },
 
         fallbacks=[CommandHandler('cancel', cancel)]
@@ -36,9 +34,9 @@ def init_bot(bot, update_queue, logger_g):
     return update_queue
 
 def start(update, context):
-    location_keyboard = telegram.KeyboardButton(text="send_location", request_location=True)
+    location_keyboard = KeyboardButton(text="send_location", request_location=True)
     custom_keyboard = [[ location_keyboard]]
-    reply_markup = telegram.ReplyKeyboardMarkup(custom_keyboard)
+    reply_markup = ReplyKeyboardMarkup(custom_keyboard)
     context.message.reply_text('Send me the Location of place where you plan to go', reply_markup=reply_markup)
 
     return LOCATION
@@ -52,7 +50,6 @@ def location(update, context):
                               'Tell me, what is your budget?')
 
     return BUDGET
-
 
 def budget(update, context):
     user = context.message.from_user
