@@ -37,14 +37,14 @@ def start(update, context):
     # location_keyboard = KeyboardButton(text="send_location", request_location=True)
     # custom_keyboard = [[ location_keyboard]]
     # reply_markup = ReplyKeyboardMarkup(custom_keyboard)
-    
+
     keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
                  InlineKeyboardButton("Option 2", callback_data='2')],
 
                 [InlineKeyboardButton("Option 3", callback_data='3')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    context.message.reply_text('Send me the Location of place where you plan to go', reply_markup=reply_markup)
+    context.bot.send_message('Send me the Location of place where you plan to go', reply_markup=reply_markup)
 
     return LOCATION
 
