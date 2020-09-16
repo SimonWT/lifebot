@@ -51,7 +51,7 @@ def start(update, context):
     reply_markup = InlineKeyboardMarkup(keyboard)
     # context.bot.send_message(text='Send me the Location of place where you plan to go', reply_markup=reply_markup)
 
-    update.message.reply_text('Please choose:', reply_markup=reply_markup)
+    context.message.reply_text('Please choose:', reply_markup=reply_markup)
 
     # return 10 #LOCATION
 
