@@ -73,9 +73,9 @@ def budget(update, context):
     return ConversationHandler.END
 
 
-def start(update, context):
-    context.message.reply_text('Send me the Location of place where you plan to go')
-    return LOCATION
+# def start(update, context):
+#     context.message.reply_text('Send me the Location of place where you plan to go')
+#     return LOCATION
 
 def cancel(update, context):
     user = context.message.from_user
