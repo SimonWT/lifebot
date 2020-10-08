@@ -1,5 +1,6 @@
 from flask import Blueprint, Response,request
 from database.models import User
+from api.controllers import user as user_logic
 
 user = Blueprint('user', __name__)
 
@@ -21,3 +22,8 @@ def edit_user(chat_id):
    body = request.get_json()
    user.update(**body)
    return Response(user.to_json(), mimetype="application/json", status=200)       
+
+@user.route('/api/user/<chat_id>', methods=['DELETE'])
+def delete_user(chat_id):
+    user_logic.delete_user(chat_id)
+    return { "status": "ok"  }
