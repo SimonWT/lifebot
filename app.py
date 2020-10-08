@@ -69,5 +69,5 @@ def index():
 if __name__ == '__main__':
     app.run(threaded=True)
 
-set_webhook()
-print(app.url_map)
+# set_webhook()
+# print(app.url_map)
