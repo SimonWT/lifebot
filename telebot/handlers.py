@@ -26,6 +26,7 @@ def init_bot(bot, update_queue, logger_g):
     )
 
     dispatcher.add_handler(conv_handler)
+    dispatcher.add_handler(CommandHandler('chat_info', chat_info))
     
     # Start the thread
     thread = Thread(target=dispatcher.start, name='dispatcher')
@@ -62,3 +63,9 @@ def cancel(update, context):
                               reply_markup=ReplyKeyboardRemove())
 
     return ConversationHandler.END
+
+def chat_info(update, context):
+    user = context.message.from_user
+    # logger.info("User %s get chat info.", user.first_name, context)
+    print(context)
+    context.message.reply_text(str(context.message.chat))

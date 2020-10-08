@@ -3,7 +3,8 @@ import telegram
 
 from telebot.credentials import bot_token, bot_user_name, URL
 from telebot.mastermind import get_response
-from telebot import handlers as tghandlers
+# from telebot import handlers as tghandlers
+from telebot.moneybot import handlers as tghandlers
 
 from database.db import initialize_db
 from database.models import Place
@@ -12,6 +13,10 @@ import logging
 
 from queue import Queue  # in python 2 it should be "from Queue"
 from telegram.ext import Dispatcher, CommandHandler
+
+from api.money import money as money_api
+from api.places import places as places_api
+from api.user import user as user_api
 
 
 global bot
@@ -22,10 +27,16 @@ update_queue = Queue()
 
 app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
+    'db': 'LifeBot',
     'host': 'mongodb+srv://root:root@cluster0.ro0oy.mongodb.net/test'
 }
 
 initialize_db(app)
+
+app.register_blueprint(money_api)
+app.register_blueprint(places_api)
+app.register_blueprint(user_api)
+
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -54,18 +65,8 @@ def set_webhook():
 def index():
     return '.'
 
-@app.route('/places', methods=['GET'])
-def get_places():
-    places = Place.objects().to_json()
-    return Response(places, mimetype="application/json", status=200)
-
-@app.route('/place', methods=['POST'])
-def add_place():
-    body = request.get_json()
-    place = Place(**body).save()
-    id = place.id
-    return {'id': str(id)}, 200
-
 if __name__ == '__main__':
     app.run(threaded=True)
-    set_webhook()
+
+set_webhook()
+print(app.url_map)
