@@ -54,6 +54,7 @@ def respond():
 
 @app.route('/setwebhook', methods=['GET', 'POST'])
 def set_webhook():
+    logger.info("Setting webhook... URL:{}   TOKEN:{}".format(URL=URL, HOOK=TOKEN))
     s = bot.setWebhook('{URL}/telegram{HOOK}'.format(URL=URL, HOOK=TOKEN))
     tghandlers.init_bot(bot, update_queue, logger)
     if s:
